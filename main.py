@@ -11,7 +11,7 @@ from os import path
 import pygame
 import sys
 #
-# adding comments
+# added comments
 
 
 
