@@ -10,7 +10,8 @@ from random import randint
 from os import path
 import pygame
 import sys
-#test
+#
+# adding comments
 
 
 
