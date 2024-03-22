@@ -10,7 +10,7 @@ from random import randint
 from os import path
 import pygame
 import sys
-
+#test
 
 
 
@@ -23,59 +23,10 @@ class Game:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         # Name of game
         pg.display.set_caption("Pency's Game!")
-        # Timer clock countdown
-        self.load_data()
-        WIDTH, HEIGHT = 400, 300
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Timer Example")
+        screen = pygame.display.set_mode((WIDTH, HEIGHT))
+       
 
-# Set up fonts
-font = pygame.font.SysFont(None, 36)
 
-# Colors
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-
-# Timer variables
-start_time = pygame.time.get_ticks()  # Get the initial time in milliseconds
-timer_duration = 60 * 1000  # Timer duration in milliseconds (1 minute in this case)
-
-# Main loop
-while True:
-    screen.fill(WHITE)
-    
-    #elapsed time
-    current_time = pygame.time.get_ticks()
-    elapsed_time = current_time - start_time
-    
-    # remaining time
-    remaining_time = max(0, timer_duration - elapsed_time)
-    seconds = remaining_time // 20
-
-    
-    # Display timer
-    timer_text = f"{seconds:02}"
-    timer_render = font.render(timer_text, True, BLACK)
-    timer_rect = timer_render.get_rect(center=(WIDTH // 2, HEIGHT // 2))
-    screen.blit(timer_render, timer_rect)
-    
-    # Update the display
-    pg.display.flip()
-    
-    # Event handling
-    for event in pg.event.get():
-        if event.type == pg.QUIT:
-            pg.quit()
-            sys.exit()
-
-    # when time is up
-    if elapsed_time >= timer_duration:
-        # Game Over!
-        print("Game Over!")
-        break
-
-    #  frame rate
-    pg.time.delay(100)  
 
     def load_data(self):
         game_folder = path.dirname(__file__)
