@@ -10,8 +10,8 @@ from random import randint
 from os import path
 import pygame
 import sys
-#
-# added comments
+import os 
+
 
 
 
@@ -24,19 +24,26 @@ class Game:
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         # Name of game
         pg.display.set_caption("Pency's Game!")
-        screen = pygame.display.set_mode((WIDTH, HEIGHT))
-       
+        self.clock = pg.time.Clock()
+        pg.key.set_repeat(500, 100)
+        self.running = True
+        self.load_data()
+        music_file = "bestmates.mp3.mp3"  # Replace "background_music.mp3" with your file path
+        pg.mixer.music.load(os.path.join("music", music_file))
+
+# Play the music
+        pg.mixer.music.play(-1)  # -1 will loop the music indefinitely
+
+
+
+    
 
 
 
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
-        '''
-        The with statement is a context manager in Python. 
-        It is used to ensure that a resource is properly closed or released 
-        after it is used. This can help to prevent errors and leaks.
-        '''
+
         with open(path.join(game_folder, 'map.txt'), 'rt') as f:
             for line in f:
                 print(line)
