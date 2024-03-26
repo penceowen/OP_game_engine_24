@@ -13,10 +13,6 @@ import os
 import sys
 
  
-
-
-
-
 # game class 
 
 class Game:
@@ -28,8 +24,7 @@ class Game:
         self.load_data()
         self.start_time = pg.time.get_ticks()  # Start time initialization
         self.time_limit = 20  # Countdown timer limit in seconds
-    
-
+        
         # MUSIC 
         music_file = "bestmates.mp3.mp3"  # music file name
         pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
@@ -40,9 +35,6 @@ class Game:
     
 
     
-
-
-
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
@@ -52,6 +44,7 @@ class Game:
                 print(line)
                 self.map_data.append(line)
                 print(self.map_data)
+    
     def new(self):
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
@@ -115,6 +108,7 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
         pg.display.flip()
+    
      
 
     def events(self):
@@ -129,6 +123,8 @@ class Game:
                 # D - right
                 # S - Down
                 # A - Left
+            
+    
     def show_start_screen(self):
         pass
     def show_go_screen(self):
