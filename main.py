@@ -9,32 +9,49 @@ import sys
 from random import randint
 from os import path
 import pygame
-import sys
 import os 
+import sys
+
+ 
 
 
 
 
 # game class 
+
 class Game:
-    # behold the methods...
     def __init__(self):
         pg.init()
-        # Display
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        # Name of game
-        pg.display.set_caption("Pency's Game!")
+        pg.display.set_caption('Pencys Game! ')
         self.clock = pg.time.Clock()
-        pg.key.set_repeat(500, 100)
-        self.running = True
         self.load_data()
-        music_file = "bestmates.mp3.mp3"  # Replace "background_music.mp3" with your file path
-        pg.mixer.music.load(os.path.join("music", music_file))
+        self.start_time = pg.time.get_ticks()  # Start time initialization
+        self.time_limit = 20  # Countdown timer limit in seconds
+    def draw(self):
+        self.screen.fill(BGCOLOR)
+        self.draw_grid()
+        self.all_sprites.draw(self.screen)
+        self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
+        # clock display
+        time_left = max(0, self.time_limit - (pg.time.get_ticks() - self.start_time) // 1000)  # Timer calculation
+        self.draw_clock(self.screen, time_left, BLUE, WIDTH // 20, 40, 20)  # clock drawing
+        pg.display.flip()
+    def check_time(self):
+        # once time runs out the game resets
+        if pg.time.get_ticks() - self.start_time >= self.time_limit * 1000:  
+            print("Time's up! Resetting game...")
+            self.new()  # Restart the game
+            self.start_time = pg.time.get_ticks()  # Reset the timer
 
-# Play the music
-        pg.mixer.music.play(-1)  # -1 will loop the music indefinitely
+        # MUSIC 
+        music_file = "bestmates.mp3.mp3"  # music file name
+        pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
 
-
+        # music loop
+        # music loops until timer runs out 
+        pg.mixer.music.play(-1)  
+    
 
     
 
