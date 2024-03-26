@@ -28,21 +28,7 @@ class Game:
         self.load_data()
         self.start_time = pg.time.get_ticks()  # Start time initialization
         self.time_limit = 20  # Countdown timer limit in seconds
-    def draw(self):
-        self.screen.fill(BGCOLOR)
-        self.draw_grid()
-        self.all_sprites.draw(self.screen)
-        self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
-        # clock display
-        time_left = max(0, self.time_limit - (pg.time.get_ticks() - self.start_time) // 1000)  # Timer calculation
-        self.draw_clock(self.screen, time_left, BLUE, WIDTH // 20, 40, 20)  # clock drawing
-        pg.display.flip()
-    def check_time(self):
-        # once time runs out the game resets
-        if pg.time.get_ticks() - self.start_time >= self.time_limit * 1000:  
-            print("Time's up! Resetting game...")
-            self.new()  # Restart the game
-            self.start_time = pg.time.get_ticks()  # Reset the timer
+    
 
         # MUSIC 
         music_file = "bestmates.mp3.mp3"  # music file name
