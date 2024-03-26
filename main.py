@@ -1,7 +1,9 @@
 # This file was created by: Owen Pence
 # Works cited: Chris Cozort & OpenAi
+# chat.openai.com
+# https://github.com/ccozort
 
-# 
+
 import pygame as pg
 from settings import *
 from sprites import *
@@ -14,27 +16,27 @@ import sys
 
  
 # game class 
-
 class Game:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
-        pg.display.set_caption('Pencys Game! ')
+        pg.display.set_caption('Pencys Game! ') # name of game
         self.clock = pg.time.Clock()
         self.load_data()
-        self.start_time = pg.time.get_ticks()  # Start time initialization
-        self.time_limit = 20  # Countdown timer limit in seconds
-        
+        self.start_time = pg.time.get_ticks()  # time intilization
+        self.time_limit = 20  # timer countdown - seconds
+    
         # MUSIC 
+        # sources; Chapt GPT- Open Ai
+        # Question- how do I add music file to pygame
         music_file = "bestmates.mp3.mp3"  # music file name
         pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
-
-        # music loop
-        # music loops until timer runs out 
+        # music loop (until timer runs out) 
         pg.mixer.music.play(-1)  
     
-
     
+    # load data with map.txt file
+    # map.txt file configures map
     def load_data(self):
         game_folder = path.dirname(__file__)
         self.map_data = []
@@ -45,6 +47,7 @@ class Game:
                 self.map_data.append(line)
                 print(self.map_data)
     
+    # tiles and their location 4       
     def new(self):
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
@@ -55,30 +58,31 @@ class Game:
             print(row)
             for col, tile in enumerate(tiles):
                 print(col)
-                # Tile location of wall
+                # location of wall 
                 if tile == '1':
                     print("a wall at", row, col)
                     Wall(self, col, row)
-                # Tile location of Player
+                # location of Player
                 if tile == 'P':
                     self.player = Player(self, col, row)
-                # Tile location of Coin
+                # location of Coin
                 if tile == 'C':
                     Coin(self, col, row)
-                # Tile location of Negative
+                # location of Negative
                 if tile == 'N':
                     Negative(self, col, row)
+    # game run
     def run(self):
         self.playing = True
         while self.playing:
-            self.dt = self.clock.tick(FPS) / 1000
-            # this is input
+            self.dt = self.clock.tick(FPS) / 1000 # frame rate of game
+            # game input
             self.events()
-            # this is processing
+            # game processing
             self.update()
-            # this output
+            # game output
             self.draw()
-
+    # game quit
     def quit(self):
         pg.quit()
         sys.exit()
@@ -89,7 +93,8 @@ class Game:
         self.all_sprites.update()
     
     
-    # Grid drawn for the game
+    # grid of the game 
+    # pygame map H/W
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
             pg.draw.line(self.screen, GREEN, (x, 0), (x, HEIGHT))
@@ -102,36 +107,40 @@ class Game:
         text_rect = text_surface.get_rect()
         text_rect.topleft = (x*TILESIZE,y*TILESIZE)
         surface.blit(text_surface, text_rect)
+    # drawing of score board (top left corner)
     def draw(self):
         self.screen.fill(BGCOLOR)
         self.draw_grid()
         self.all_sprites.draw(self.screen)
-        self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1)
+        self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1) # location
         pg.display.flip()
     
-     
+    
 
+    
     def events(self):
-            # listening for events
+            # events list
             for event in pg.event.get():
-                # when you hit the red x the window closes the game ends
+                # how to quit game - via X in the top right corner
                 if event.type == pg.QUIT:
                     self.quit()
-                    print("the game has ended..")
+                    print("game over!")
                 # keyboard events
                 # W = up
                 # D - right
                 # S - Down
                 # A - Left
             
-    
+    # start screen
     def show_start_screen(self):
         pass
+    # end screen
     def show_go_screen(self):
         pass
 
 g = Game()
 # g.show_go_screen()
+# game run
 while True:
     g.new()
     g.run()

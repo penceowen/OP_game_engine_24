@@ -1,12 +1,12 @@
-# This file was created by: Chris Cozort
-# Appreciation to Chris Bradfield
+# This file was created by: Owen Pence 
+# sources: https://github.com/ccozort
 
 import pygame as pg
 from settings import *
 
-# write a player class
 
-
+# player class 
+# includes color, size, speed
 class Player(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
@@ -34,7 +34,7 @@ class Player(pg.sprite.Sprite):
             self.vy = -self.speed
         if keys[pg.K_DOWN] or keys[pg.K_s]:
             self.vy = self.speed
-# Wall collisions
+# When collides with wall 
     def collide_with_walls(self, dir):
         if dir == 'x':
             hits = pg.sprite.spritecollide(self, self.game.walls, False )
@@ -54,12 +54,9 @@ class Player(pg.sprite.Sprite):
                     self.y = hits[0].rect.bottom
                 self.vy = 0
                 self.rect.y = self.y
-    # old motion
-    # def move(self, dx=0, dy=0):
-    #     self.x += dx
-    #     self.y += dy
+        # reaction for x & y locations
 
-# Collision with mobs 
+# Collision with player 
 # Both coins and negatives
     def collide_with_group(self, group, kill):
         hits = pg.sprite.spritecollide(self, group, kill)
@@ -81,6 +78,8 @@ class Player(pg.sprite.Sprite):
         self.collide_with_group(self.game.coins, True)
         self.collide_with_group(self.game.Negative, True)
 
+# Wall class 
+# includes color, size, speed
 class Wall(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.walls
@@ -100,7 +99,9 @@ class Wall(pg.sprite.Sprite):
         # self.rect.y += TILESIZE * self.speed
         if self.rect.x > WIDTH or self.rect.x < 0:
             self.speed *= -1
-       
+
+# Coin class 
+# includes color, size, speed     
 class Coin(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.coins
@@ -114,6 +115,8 @@ class Coin(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
+# negative class 
+# includes color, size, speed
 class Negative(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites, game.coins
@@ -127,6 +130,5 @@ class Negative(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
     
-
 
 
