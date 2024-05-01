@@ -34,6 +34,7 @@ class Game:
         pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
         # music loop (until timer runs out) 
         pg.mixer.music.play(-1)  
+
     
     
     # load data with map.txt file
