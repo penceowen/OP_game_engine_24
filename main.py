@@ -1,4 +1,3 @@
-# This file was created by: Owen Pence
 # Works cited: Chris Cozort & OpenAi
 # chat.openai.com
 # https://github.com/ccozort
@@ -25,6 +24,8 @@ class Game:
         self.load_data()
         self.start_time = pg.time.get_ticks()  # time intilization
         self.time_limit = 20  # timer countdown - seconds
+        
+   
     
         # MUSIC 
         # sources; Chapt GPT- Open Ai
@@ -145,4 +146,3 @@ while True:
     g.new()
     g.run()
     # g.show_go_screen()
-
