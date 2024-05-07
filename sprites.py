@@ -64,17 +64,14 @@ class Player(pg.sprite.Sprite):
         if hits:
             if str(hits[0].__class__.__name__) == "Coin":
                 self.moneybag += 1
-            music_file = "ka-ching.mp3"  # music file name
-            pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
+                self.game.kachingsound.play()
             # music loop (until timer runs out) 
-            pg.mixer.music.play(-1) 
             # Negative is -1 point
             if str(hits[0].__class__.__name__) == "Negative":
                 self.moneybag -= 1
-                music_file = "roblox-death-sound_1.mp3"  # music file name
-                pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
+                self.game.oofsound.play()
                 # music loop (until timer runs out) 
-                pg.mixer.music.play(0) 
+
     # Update
     def update(self):
         self.get_keys()

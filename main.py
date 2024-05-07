@@ -18,6 +18,7 @@ import sys
 class Game:
     def __init__(self):
         pg.init()
+        pg.mixer.init()
         self.screen = pg.display.set_mode((WIDTH, HEIGHT))
         pg.display.set_caption('Pencys Game! ') # name of game
         self.clock = pg.time.Clock()
@@ -25,25 +26,23 @@ class Game:
         self.start_time = pg.time.get_ticks()  # time intilization
         self.time_limit = 20  # timer countdown - seconds
         
-   
-    
         # MUSIC 
         # sources; Chapt GPT- Open Ai
         # Question- how do I add music file to pygame
-        music_file = "bestmates.mp3.mp3"  # music file name
-        pg.mixer.music.load(os.path.join("music", music_file)) # music folder 
+
+
         # music loop (until timer runs out) 
-        pg.mixer.music.play(-1)  
+        
 
     
     
     # load data with map.txt file
     # map.txt file configures map
     def load_data(self):
-        game_folder = path.dirname(__file__)
+        self.game_folder = path.dirname(__file__)
+        self.music_folder = path.join(self.game_folder, 'music')
         self.map_data = []
-
-        with open(path.join(game_folder, 'map.txt'), 'rt') as f:
+        with open(path.join(self.game_folder, 'map.txt'), 'rt') as f:
             for line in f:
                 print(line)
                 self.map_data.append(line)
@@ -51,6 +50,10 @@ class Game:
     
     # tiles and their location 4       
     def new(self):
+        self.load_data()
+        pg.mixer.music.load(path.join(self.music_folder, 'bestmates.mp3.mp3'))
+        self.kachingsound = pg.mixer.Sound(path.join(self.music_folder, 'ka-ching.mp3'))
+        self.oofsound = pg.mixer.Sound(path.join(self.music_folder, 'roblox-death-sound_1.mp3'))
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
         self.coins = pg.sprite.Group()
@@ -75,6 +78,7 @@ class Game:
                     Negative(self, col, row)
     # game run
     def run(self):
+        pg.mixer.music.play(loops=-1)  
         self.playing = True
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000 # frame rate of game
