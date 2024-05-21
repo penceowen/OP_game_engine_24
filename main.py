@@ -3,6 +3,17 @@
 # https://github.com/ccozort
 
 
+# THIS IS IT! 
+# THIS IS THE FINAL FINAL
+# HERE ARE THE GOALS
+# Goals: 
+# - Add multiplayer feature
+# - Add sound effects
+# - Change the game format - via new map
+# - Make it look awesome
+
+
+
 import pygame as pg
 from settings import *
 from sprites import *
