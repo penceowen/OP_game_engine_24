@@ -32,10 +32,7 @@ class Game:
 
 
         # music loop (until timer runs out) 
-        
 
-    
-    
     # load data with map.txt file
     # map.txt file configures map
     def load_data(self):
@@ -67,8 +64,11 @@ class Game:
                 if tile == '1':
                     print("a wall at", row, col)
                     Wall(self, col, row)
-                # location of Player
+                # location of Player 1
                 if tile == 'P':
+                    self.player = Player(self, col, row)
+                # location of Player 2
+                if tile == 'L':
                     self.player = Player(self, col, row)
                 # location of Coin
                 if tile == 'C':
