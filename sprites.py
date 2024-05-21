@@ -6,9 +6,10 @@ from settings import *
 import os 
 
 
-# player class 
+# player classes
 # includes color, size, speed
-class Player(pg.sprite.Sprite):
+
+class Player1(pg.sprite.Sprite):
     def __init__(self, game, x, y):
         self.groups = game.all_sprites
         pg.sprite.Sprite.__init__(self, self.groups)
@@ -21,19 +22,93 @@ class Player(pg.sprite.Sprite):
         self.y = y * TILESIZE
         self.speed = 300
         self.moneybag = 0
-
     def get_keys(self):
         self.vx, self.vy = 0, 0
         keys = pg.key.get_pressed()
-        if keys[pg.K_LEFT] or keys[pg.K_a]:
+        if keys[pg.K_LEFT]:
             self.vx = -self.speed
             print(self.rect.x)
             print(self.rect.y)
-        if keys[pg.K_RIGHT] or keys[pg.K_d]:
+        if keys[pg.K_RIGHT]:
             self.vx = self.speed
-        if keys[pg.K_UP] or keys[pg.K_w]:
+        if keys[pg.K_UP]:
             self.vy = -self.speed
-        if keys[pg.K_DOWN] or keys[pg.K_s]:
+        if keys[pg.K_DOWN]:
+            self.vy = self.speed
+# When collides with wall 
+    def collide_with_walls(self, dir):
+        if dir == 'x':
+            hits = pg.sprite.spritecollide(self, self.game.walls, False )
+            if hits:
+                if self.vx > 0:
+                    self.x = hits[0].rect.left - self.rect.width
+                if self.vx < 0:
+                    self.x = hits[0].rect.right
+                self.vx = 0
+                self.rect.x = self.x
+        if dir == 'y':
+            hits = pg.sprite.spritecollide(self, self.game.walls, False )
+            if hits:
+                if self.vy > 0:
+                    self.y = hits[0].rect.top - self.rect.height
+                if self.vy < 0:
+                    self.y = hits[0].rect.bottom
+                self.vy = 0
+                self.rect.y = self.y
+        # reaction for x & y locations
+
+# Collision with player 
+# Both coins and negatives
+    def collide_with_group(self, group, kill):
+        hits = pg.sprite.spritecollide(self, group, kill)
+        if hits:
+            if str(hits[0].__class__.__name__) == "Coin":
+                self.moneybag += 1
+                self.game.kachingsound.play()
+            # music loop (until timer runs out) 
+            # Negative is -1 point
+            if str(hits[0].__class__.__name__) == "Negative":
+                self.moneybag -= 1
+                self.game.oofsound.play()
+                # music loop (until timer runs out) 
+
+    # Update
+    def update(self):
+        self.get_keys()
+        self.x += self.vx * self.game.dt
+        self.y += self.vy * self.game.dt
+        self.rect.x = self.x
+        self.collide_with_walls('x')
+        self.rect.y = self.y
+        self.collide_with_walls('y')
+        self.collide_with_group(self.game.coins, True)
+        self.collide_with_group(self.game.Negative, True)
+
+class Player2(pg.sprite.Sprite):
+    def __init__(self, game, x, y):
+        self.groups = game.all_sprites
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.image = pg.Surface((TILESIZE, TILESIZE))
+        self.image.fill(GREEN)
+        self.rect = self.image.get_rect()
+        self.vx, self.vy = 0, 0
+        self.x = x * TILESIZE
+        self.y = y * TILESIZE
+        self.speed = 300
+        self.moneybag = 0
+    def get_keys(self):
+        self.vx, self.vy = 0, 0
+        keys = pg.key.get_pressed()
+        if keys[pg.K_a]:
+            self.vx = -self.speed
+            print(self.rect.x)
+            print(self.rect.y)
+        if keys[pg.K_d]:
+            self.vx = self.speed
+        if keys[pg.K_w]:
+            self.vy = -self.speed
+        if keys[pg.K_s]:
             self.vy = self.speed
 # When collides with wall 
     def collide_with_walls(self, dir):

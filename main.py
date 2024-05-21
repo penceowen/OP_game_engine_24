@@ -32,6 +32,7 @@ class Game:
 
 
         # music loop (until timer runs out) 
+        
 
     # load data with map.txt file
     # map.txt file configures map
@@ -66,10 +67,10 @@ class Game:
                     Wall(self, col, row)
                 # location of Player 1
                 if tile == 'P':
-                    self.player = Player(self, col, row)
+                    self.player = Player1(self, col, row)
                 # location of Player 2
                 if tile == 'L':
-                    self.player = Player(self, col, row)
+                    self.player = Player2(self, col, row)
                 # location of Coin
                 if tile == 'C':
                     Coin(self, col, row)
@@ -120,8 +121,6 @@ class Game:
         self.all_sprites.draw(self.screen)
         self.draw_text(self.screen, str(self.player.moneybag), 64, WHITE, 1, 1) # location
         pg.display.flip()
-    
-    
 
     
     def events(self):
